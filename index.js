@@ -11,7 +11,7 @@ app.post('/restaurants', addRestaurant);
 app.get('/restaurants', getAllRestaurants);
 
 
-app.listen(3000,  () => {
-    console.log('Listening on http://localhost:3000...');
+app.listen(3030,  () => {
+    console.log('Listening on http://localhost:3030...');
 });
 
