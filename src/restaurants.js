@@ -55,7 +55,7 @@ export const getAllRestaurants = async (req, res) => {
     const db = connectDb();
     try {const snapshout = await db.collection('restaurants').get();
     const restaurantsArray = snapshot.doc.map(doc => {
-        lete restuarant = doc.data();
+        let restaurant = doc.data();
         restaurant.id = doc.id;
         return restaurant;
     })
