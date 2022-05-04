@@ -37,6 +37,7 @@ const db = connectDb();
     const newRestaurant = {
         name: req.body.name,
         address: req.body.address,
+        phone: req.body.phone,
         rating: req.body.rating || 3,   //or statement b/c we didn't check if there was a rating/cuisine
         cuisine: req.body.cuisine || 'American' //setting a default assumption 
     }
@@ -64,3 +65,38 @@ res.send(restaurantsArray);
         res.status(500).send(err);
     }
 }
+
+export const deleteRestaurant = async (req, res) => {
+    const { restaurantId } = req.params;
+    if(!restaurantId) {
+      res.status(401).send('Invalid request');
+      return;
+    }
+    try {
+    const db = connectDb();
+    await db.collection("restaurants").doc(restaurantId).delete()
+      .then(() => {
+        res.send('Restaurant deleted.');
+      })
+    } catch (err) {
+        res.status(500).send(err);
+      };
+  } 
+
+
+  export const updateRestaurant = async (req, res) => {
+    if(!req.params || !req.params.restaurantId || !req.body) {
+      res.status(401).send('Invalid request');
+      return;
+    }
+    try {
+    const { restaurantId } = req.params;
+    const db = connectDb();
+    await db.collection('restaurants').doc(restaurantId).update(req.body)
+      .then(() => {
+        res.send('Restaurant updated.');
+      })
+     } catch (err) {
+        res.status(500).send(err);
+      };
+  }
